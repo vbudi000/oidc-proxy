@@ -2,15 +2,27 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: oidc-proxy
+  labels:
+    app: oidc-proxy
 spec:
   replicas: 1
   template:
     spec:
+      metadata:
+        labels:
+          app: oidc-proxy
       containers:
       - command:
         - node
         args:
         - app.js
-        image: ibmcloudacademy:oidc-proxy:v1
+        image: ibmcloudacademy/oidc-config:v1
         imagePullPolicy: Always
         name: proxy
+        volumeMounts:
+        - name: config-volume
+          mountPath: /config
+      volumes:
+      - name: config-volume
+        configMap:
+          name: oidc-config
