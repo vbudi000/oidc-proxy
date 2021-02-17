@@ -1,0 +1,16 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: oidc-proxy
+spec:
+  replicas: 1
+  template:
+    spec:
+      containers:
+      - command:
+        - node
+        args:
+        - app.js
+        image: ibmcloudacademy:oidc-proxy:v1
+        imagePullPolicy: Always
+        name: proxy
